@@ -29,7 +29,7 @@ public class Day1 {
 
     public int calc1(int[] numbers) throws Exception {
         for (int i = 0; i < numbers.length; i++) {
-            for (int j = 1; j < numbers.length; j++) {
+            for (int j = i + 1; j < numbers.length; j++) {
                 if (numbers[i] + numbers[j] == 2020) {
                     return numbers[i] * numbers[j];
                 }
@@ -40,8 +40,8 @@ public class Day1 {
 
     public int calc2(int[] numbers) throws Exception {
         for (int i = 0; i < numbers.length; i++) {
-            for (int j = 1; j < numbers.length; j++) {
-                for (int k = 2; k < numbers.length; k++) {
+            for (int j = i + 1; j < numbers.length; j++) {
+                for (int k = j + 1; k < numbers.length; k++) {
                     if (numbers[i] + numbers[j] + numbers[k] == 2020) {
                         return numbers[i] * numbers[j] * numbers[k];
                     }
