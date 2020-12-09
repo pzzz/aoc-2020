@@ -5,19 +5,20 @@ import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Day4 {
+public class Day7 {
     public static void main(String[] args) throws Exception {
-        Day4 d4 = new Day4();
-        d4.doTasks();
+        Day7 d7 = new Day7();
+        d7.doTasks();
     }
 
+    //possibleWrappings wird nur einmal initialisiert, deshalb können nicht mehrere Inputs in einem Durchlauf ausgewertet werden. (TODO)
     public void doTasks() throws Exception {
-        List<String> allLines = Files.readAllLines(Paths.get("data/ulrike/day4input"));        
-        //allLines = Files.readAllLines(Paths.get("data/ulrike/day4testinput"));
-        System.out.println("Ulrike: " + calc1(allLines));
+        List<String> allLines = Files.readAllLines(Paths.get("data/ulrike/day7input"));        
+        //allLines = Files.readAllLines(Paths.get("data/ulrike/day7testinput"));
+        //System.out.println("Ulrike: " + calc1(allLines));
         // System.out.println("Ulrike: " + calc2(allLines));
-        //allLines = Files.readAllLines(Paths.get("data/peter/day3input"));
-        //System.out.println("Peter: " + calc1(allLines));
+        allLines = Files.readAllLines(Paths.get("data/peter/day7input"));
+        System.out.println("Peter: " + calc1(allLines));
         // System.out.println("Peter: " + calc2(allLines));
         analyse("bright indigo bags contain 4 shiny turquoise bags, 3 wavy yellow bags.","shiny gold");
         
@@ -25,7 +26,8 @@ public class Day4 {
     
 
     public int calc1(List<String> allLines) {
-        iter (allLines, "shiny gold");
+        recursiveCheck
+     (allLines, "shiny gold");
         return possibleWrappings.size();
     } 
     
@@ -37,14 +39,15 @@ public class Day4 {
 
     List<String> possibleWrappings = new LinkedList<String>();
 
-    public void iter (List<String> allLines, String color){
+    public void recursiveCheck
+ (List<String> allLines, String color){
         for (String line: allLines) {
             String result = analyse(line, color);
             System.out.println(result);
             if(result != " "){
                 if(!possibleWrappings.contains(result)){
                     possibleWrappings.add(result);
-                    iter (allLines, result);
+                    recursiveCheck(allLines, result);
                 }
             }
         }
