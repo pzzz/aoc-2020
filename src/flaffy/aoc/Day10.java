@@ -5,6 +5,8 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Map;
+import java.util.HashMap;
 
 public class Day10 {
     public static void main(String[] args) throws Exception {
@@ -18,14 +20,22 @@ public class Day10 {
         for (String line : allLines) {
             allNumbers.add(Integer.parseInt(line));
         }
-        // System.out.println("Ulrike: " + calc1(allNumbers));
-        // System.out.println("Ulrike: " + calc2(allNumbers));
+        System.out.println("Ulrike: " + calc1(allNumbers));
+        allNumbers = new ArrayList<>();
+        for (String line : allLines) {
+            allNumbers.add(Integer.parseInt(line));
+        }
+        System.out.println("Ulrike: " + calc2(allNumbers));
         allLines = Files.readAllLines(Paths.get("data/peter/day10input"));
         allNumbers = new ArrayList<>();
         for (String line : allLines) {
             allNumbers.add(Integer.parseInt(line));
         }
-        // System.out.println("Peter: " + calc1(allNumbers));
+        System.out.println("Peter: " + calc1(allNumbers));
+        allNumbers = new ArrayList<>();
+        for (String line : allLines) {
+            allNumbers.add(Integer.parseInt(line));
+        }
         System.out.println("Peter: " + calc2(allNumbers));
     }
 
@@ -45,29 +55,39 @@ public class Day10 {
         return diffOne * diffThree;
     }
 
-    public int calc2(List<Integer> allNumbers) {
+    public long calc2(List<Integer> allNumbers) {
         allNumbers.add(0);
         Collections.sort(allNumbers);
         allNumbers.add(allNumbers.get(allNumbers.size() - 1) + 3);
-        System.out.println(allNumbers);
 
-        List<Integer> solutions = new ArrayList<>();
-        solutions.add(0);
+        Map<Integer, Long> paths = new HashMap<>();
+        paths.put(0, 1L);
         for (int i = 1; i < allNumbers.size() - 1; i++) {
-                List<Integer> newSolutions = new ArrayList<>();
-                for (Integer solution: solutions) {
-                    if (isValid(allNumbers, solution, i)) {
-                        newSolutions.add(solution);
-                    }
-                    newSolutions.add(allNumbers.get(i));
+            Map<Integer, Long> newPaths = new HashMap<>();
+            for (Integer lastNumber: paths.keySet()){
+                if(isValid(allNumbers, lastNumber, i)) {
+                    addToMap(newPaths, lastNumber, paths.get(lastNumber));
                 }
-                solutions = newSolutions;
-                System.out.println(solutions);
+                addToMap(newPaths, allNumbers.get(i), paths.get(lastNumber));
             }
-        return solutions.size();
+            paths = newPaths;
+        }
+        long sum = 0;
+        for (Long value: paths.values()) {
+            sum += value;
+        }
+        return sum;
     }
 
     public boolean isValid(List<Integer> allNumbers, int lastNumber, int toCheck) {
         return (allNumbers.get(toCheck + 1) - lastNumber) <= 3;
+    }
+
+    public void addToMap(Map<Integer, Long> paths, int key, long value) {
+        if (paths.containsKey(key)) {
+            paths.put(key, paths.get(key) + value);
+        } else {
+            paths.put(key, value);
+        }
     }
 }
