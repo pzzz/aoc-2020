@@ -17,7 +17,7 @@ public class Day7 {
         List<String> allLines = Files.readAllLines(Paths.get("data/ulrike/day7input"));
         // allLines = Files.readAllLines(Paths.get("data/ulrike/day7testinput"));
         // System.out.println("Ulrike: " + calc1(allLines));
-        System.out.println("Ulrike: " + calc2(allLines));
+        // System.out.println("Ulrike: " + calc2(allLines));
         allLines = Files.readAllLines(Paths.get("data/peter/day7input"));
         // System.out.println("Peter: " + calc1(allLines));
         System.out.println("Peter: " + calc2(allLines));
@@ -70,6 +70,7 @@ public class Day7 {
         for (int i = 0; i < allLines.size(); i++) {
             allRegulations[i] = new Line(allLines.get(i));
         }
+        //return contentNumber("wavy purple", allRegulations);
         return contentNumber("shiny gold", allRegulations);
 
     }
@@ -93,14 +94,12 @@ public class Day7 {
             try {
                 countBags[i] = Integer.parseInt(content[0]);
                 int innerResult = contentNumber(content[1], allRegulations);
-                if (innerResult != 1) {
+                if (innerResult != 0) {
                     countBags[i] = countBags[i] + countBags[i] * innerResult;
-                } else { // keine weitere Verzweigung
-                    countBags[i] *= innerResult;
                 }
             } catch (Exception e) {
                 // enthält keine Taschen
-                countBags[i] = 1;
+                countBags[i] = 0;
             }
         }
 
@@ -108,7 +107,6 @@ public class Day7 {
         for (int i = 0; i < length; i++) {
             result += countBags[i];
         }
-        System.out.println(result);
         return result;
     }
 
