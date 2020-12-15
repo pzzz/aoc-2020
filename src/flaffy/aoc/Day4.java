@@ -13,10 +13,10 @@ public class Day4 {
     }
 
     public void doTasks() throws Exception {
-        // List<String> allLines = Files.readAllLines(Paths.get("data/ulrike/day4input"));
-        // System.out.println("Ulrike: " + calc1(allLines));
-        // System.out.println("Ulrike: " + calc2(allLines));
-        List<String> allLines = Files.readAllLines(Paths.get("data/peter/day4input"));
+         List<String> allLines = Files.readAllLines(Paths.get("data/ulrike/day4input"));
+         System.out.println("Ulrike: " + calc1(allLines));
+         System.out.println("Ulrike: " + calc2(allLines));
+         allLines = Files.readAllLines(Paths.get("data/peter/day4input"));
         System.out.println("Peter: " + calc1(allLines));
         System.out.println("Peter: " + calc2(allLines));
     }
